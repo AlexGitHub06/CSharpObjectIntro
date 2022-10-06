@@ -46,11 +46,43 @@ namespace CSharpObjectIntro
 
         internal static void UseBankAccount()
         {     
-            BankAccount myBank = new BankAccount(500);
+            BankAccount myBank = new BankAccount(100);
+
+            Console.WriteLine(Success(myBank.Withdraw(100)));
             myBank.Deposit(500);
-            myBank.OverDraft = -100;
-            bool wP = myBank.Withdraw(1000);
-            Console.WriteLine(wP ? "can withdraw" : "can't withdraw");
+            
+            myBank.ChangeOverDraftLimit(-100);
+
+            Console.WriteLine(Success(myBank.Withdraw(1000)));
+
+            myBank.MakeTransaction(DateTime.Now, 200, "grocery", "Waitrose", "Card");
+
+            myBank.ApplyInterest();
+
+            myBank.MakeTransaction(DateTime.Now.AddDays(-1), 200, "games");
+            myBank.MakeTransaction(DateTime.Now.AddDays(-2), 300);
+            
+
+            Console.WriteLine("Balance yesterday = " + myBank.BalanceAtDate(DateTime.Now.AddDays(-1)) + "\n");
+            Console.WriteLine("Money spent between yesterday and tomorrow = " + myBank.MoneyBetween(DateTime.Now.AddDays(-1), DateTime.Now.AddDays(1)) + "\n");
+
+            Console.WriteLine("Total transactions by category: ");
+            var categMoney = myBank.AllCategoriesMoney();       
+            foreach (KeyValuePair<string, decimal> kvp in categMoney)
+                Console.WriteLine("{0}:{1}", kvp.Key, kvp.Value);
+
+            /*
+            foreach (var transaction in myBank.transactions)
+            {
+                Console.WriteLine(transaction.Amount);
+            }
+            */
+
+        }
+
+        static string Success(bool transac)
+        {
+            return transac ? "can withdraw" : "can't withdraw";
         }
     }
 }
