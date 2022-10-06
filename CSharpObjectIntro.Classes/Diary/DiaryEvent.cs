@@ -18,6 +18,7 @@ namespace CSharpObjectIntro.Classes.Diary
         public string Description { get; private set; }
         public string Location { get; private set; }
 
+
         public bool IsMorning
         {
             get

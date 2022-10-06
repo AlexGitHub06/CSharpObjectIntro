@@ -8,15 +8,43 @@ namespace CSharpObjectIntro.Classes.BankAccount
 {
     public class BankAccount
     {
+        //DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+
+        //Constructor
+        public BankAccount(decimal balance = 0)
+        {
+            Balance = balance;
+            OpeningDate = DateTime.Today;
+            OverDraft = 0;
+
+            
+        }
+
+        //Properties
+        public decimal Balance{ get; private set; } 
+        public DateTime OpeningDate { get; private set; }
+        public decimal OverDraft { get; set;}
+
+        public void Deposit(decimal money)
+        {
+            Balance += money;
+        }
+
+        public bool Withdraw(decimal money)
+        {
+            if (Balance - money > OverDraft) { Balance -= money; return true; }
+            else { return false; }     
+        }
+
         // As you complete each task make sure you test your code carefully
         // Choose some combination of manual testing, Debug.Assert and unit tests
 
-        // Task One        
+        // Task One DONE        
         // The bank account should have a balance property        
         // It should have a constructor that sets the initial balance (default zero) and the opening date (default today)
         // It should have methods to deposit and withdraw/make payments from the account. 
 
-        // Task Two
+        // Task Two DONE
         // Give the option to set an overdraft limit
         // Do not allow a withdrawal/payment if the overdraft limit is exceeded. You could return false or throw an exception.
 
